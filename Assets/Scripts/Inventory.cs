@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,11 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
+    private bool haveMatches = false;
+    public RawImage matchHudGUI;
+    public Text textHints;
+    private bool campfireStarted = false;
+
     public static int charge = 0;
     public AudioClip collectSound;
     //HuD
@@ -41,5 +47,43 @@ public class Inventory : MonoBehaviour
         {
             hudChargeGui.enabled = true;
         }
+    }
+
+    void MatchPickup()
+    {
+        haveMatches = true;
+        AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        matchHudGUI.enabled = true;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.gameObject.name=="campfire")
+        {
+            if (haveMatches)
+            {
+                LightFire(hit.gameObject);
+            }
+            else if (!campfireStarted)
+            {
+                textHints.SendMessage("ShowHint", "Móg³bym rozpalic ognisko do wezwania pomocy.\nTylko czym....");
+            }
+
+        }
+    }
+
+    private void LightFire(GameObject campfire)
+    {
+        ParticleSystem[] fireEmitters;
+        fireEmitters = campfire.GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem emitter in fireEmitters)
+        {
+            emitter.Play();
+        }
+        campfireStarted = true;
+        campfire.GetComponent<AudioSource>().Play();
+        matchHudGUI.enabled = false;
+        haveMatches = false;
+
     }
 }
