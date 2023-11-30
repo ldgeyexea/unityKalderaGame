@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class ThrowZone : MonoBehaviour
 {
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +18,16 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="Player")
+        if(other.gameObject.tag=="Player")
         {
-            other.gameObject.SendMessage("MatchPickup");
-            Destroy(gameObject);
+            CoconutThrower.canThrow = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            CoconutThrower.canThrow = false;
         }
     }
 }
