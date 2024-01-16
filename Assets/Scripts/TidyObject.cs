@@ -10,7 +10,14 @@ public class TidyObject : MonoBehaviour
     {
         Destroy(gameObject, removeTime);
     }
+    void OnCollisionEnter(Collision theObject)
+    {
+        Debug.Log("hit: " + theObject.gameObject.name);
+        if (theObject.gameObject.name == "Wyspa")
+        {
+            gameObject.name = "graound_coconut";
+        }
+    }
 
- 
 
 }

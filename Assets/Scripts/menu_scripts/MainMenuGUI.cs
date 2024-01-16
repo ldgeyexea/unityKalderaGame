@@ -34,15 +34,15 @@ public class MainMenuGUI : MonoBehaviour
 
         if (adjustSize)
         {
-            coefX = Screen.width / 1024.0f;
-            coefY = Screen.height / 768.0f;
+            coefX = Screen.width /( 1024.0f*1.0f);
+            coefY = Screen.height / (768.0f * 1.0f);
             menuArea.width *= coefX;
             menuArea.height *= coefY;
         }
         if (adjustPosition)
         {
             float w_2 = menuArea.width * 0.0f;
-            float h_2 = menuArea.height * 0.2f;
+            float h_2 = menuArea.height * 0.5f;
             menuArea.x = (menuArea.x + w_2) * Screen.width / 1024 - w_2;
             menuArea.y = (menuArea.y + h_2) * Screen.height / 768 - h_2;
         }
@@ -92,7 +92,9 @@ public class MainMenuGUI : MonoBehaviour
         else if (menuPage == "instructions")
         {
             GUI.Label(instructionsRect,
-            "Obudzi³eœ siê na tajemniczej wyspie..." + "ZnajdŸ sposób na zwrócenie na siebie uwagi,inaczej zostaniesz tu na zawsze!");
+            "Obudzi³eœ siê na tajemniczej wyspie..." + "ZnajdŸ sposób na zwrócenie na siebie uwagi,inaczej zostaniesz tu na zawsze" +
+            "" +
+            "!");
 if (GUI.Button(quitBtnRect, "Back"))
             {
                 GetComponent<AudioSource>().PlayOneShot(beep);
